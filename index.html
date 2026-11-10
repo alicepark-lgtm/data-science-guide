@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>데이터 과학 프로젝트 가이드북</title><meta name="claude:viewport-fit-sides" content="cover"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"><style>
+/* Layout: 수업 슬라이드의 '주황 단계 라벨 + 남색 제목 + 4색 블록'을 이어받은 현장 노트형 가이드.
+   왼쪽 단계 목차(모바일은 위쪽 칩) + 오른쪽 단계별 카드 */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#1d2540; --muted:#5b6478; --line:#e1e4ea;
+  --accent:#e8590c; --accent-soft:#fff1e8;
+  --blue:#3b6fd8; --green:#2f9e6a; --orange:#e8590c; --purple:#8a55c9;
+  --code-bg:#1f2433; --code-fg:#e8ebf2; --code-com:#8b93a7; --code-str:#f2c879; --code-kw:#7fb4ff; --code-num:#f59f7b; --code-fn:#8fe3b4;
+  --ph:#ffd8a8; --ph-fg:#7a2e00;
+  --f-ui:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --f-code:'JetBrains Mono','D2Coding','Consolas',monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12151d; --surface:#1a1f2b; --ink:#e7eaf2; --muted:#9aa3b8; --line:#2b3243;
+  --accent:#ff8a3d; --accent-soft:#3a2416;
+  --blue:#6f9cff; --green:#4cc38a; --orange:#ff8a3d; --purple:#b48cf0;
+  --code-bg:#0d1017; --ph:#5a3313; --ph-fg:#ffd3ad; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151d; --surface:#1a1f2b; --ink:#e7eaf2; --muted:#9aa3b8; --line:#2b3243;
+  --accent:#ff8a3d; --accent-soft:#3a2416;
+  --blue:#6f9cff; --green:#4cc38a; --orange:#ff8a3d; --purple:#b48cf0;
+  --code-bg:#0d1017; --ph:#5a3313; --ph-fg:#ffd3ad; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin:0 auto;padding-block:28px 64px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.3}
+code,pre{font-family:var(--f-code)}
+.eyebrow{color:var(--accent);font-weight:700;font-size:12px;letter-spacing:.08em}
+header.top{display:grid;gap:18px;margin-bottom:22px}
+header.top h1{font-size:clamp(24px,4vw,34px);font-weight:700}
+header.top p{margin:0;color:var(--muted);max-width:68ch}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}
+.flow span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px 11px;font-weight:600}
+.flow i{color:var(--muted);font-style:normal}
+.methods{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.m{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:10px;padding:12px 14px;display:grid;gap:4px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.m:hover{border-color:var(--c)}
+.m b{font-size:17px;color:var(--c)}
+.m .q{font-size:13px}
+.m small{color:var(--muted);font-size:12px;line-height:1.5}
+.search{display:flex;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.search input{flex:1;min-width:0;border:0;background:transparent;font:inherit;color:var(--ink);outline:none}
+.search kbd{font-family:var(--f-code);font-size:11px;color:var(--muted)}
+.legend{font-size:13px;color:var(--muted)}
+.legend mark{background:var(--ph);color:var(--ph-fg);border-radius:3px;padding:0 4px;font-family:var(--f-code)}
+.layout{display:grid;grid-template-columns:210px minmax(0,1fr);gap:28px;align-items:start}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:grid;gap:2px}
+nav.toc a{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:14px}
+nav.toc a:hover{background:var(--surface)}
+nav.toc a.on{background:var(--accent-soft);color:var(--accent);font-weight:700}
+nav.toc .n{font-family:var(--f-code);font-size:12px;color:var(--muted);text-align:center}
+nav.toc .tm{font-size:11px;color:var(--muted)}
+main{display:grid;gap:40px;min-width:0}
+section.step{display:grid;gap:16px;scroll-margin-top:16px}
+.sh{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.sh .num{font-family:var(--f-code);font-weight:600;color:var(--accent);font-size:15px}
+.sh h2{font-size:22px}
+.sh .sub{color:var(--muted);font-size:14px}
+.sh .time{margin-left:auto;font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--muted);font-variant-numeric:tabular-nums}
+.goal{margin:0;font-weight:500;max-width:72ch}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:8px;min-width:0}
+.box h3{font-size:13px;letter-spacing:.04em;color:var(--muted);font-weight:700}
+.todo{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.todo label{display:flex;gap:8px;align-items:flex-start;cursor:pointer}
+.todo input{margin-top:5px;accent-color:var(--accent)}
+.todo input:checked+span{color:var(--muted);text-decoration:line-through}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:start}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:700}
+.tbl{overflow-x:auto}
+.tbl table{min-width:520px}
+.two .tbl table{min-width:0}
+.frames{margin:0;padding-left:18px;display:grid;gap:4px}
+.cards{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;display:grid;grid-template-columns:220px minmax(0,1fr);min-width:0;overflow:hidden}
+.card .hd{padding:11px 14px 9px;display:grid;gap:2px}
+.card .hd b{font-size:15px}
+.card .w{font-size:13px;color:var(--muted)}
+.card .ls{font-size:11px;color:var(--accent);font-weight:600}
+.code{position:relative;background:var(--code-bg);min-width:0}
+.code{height:100%}
+.code pre{margin:0;padding:14px 64px 14px 14px;overflow-x:auto;font-size:12.5px;line-height:1.6;color:var(--code-fg);tab-size:4}
+.code mark{background:var(--ph);color:var(--ph-fg);border-radius:3px;padding:0 2px}
+.copy{position:absolute;top:8px;right:8px;font:600 11px var(--f-ui);background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:3px 9px;cursor:pointer}
+.copy:hover{background:rgba(255,255,255,.22)}
+.copy:focus-visible,.tab:focus-visible,.m:focus-visible,nav.toc a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hljs-comment{color:var(--code-com);font-style:italic}.hljs-string{color:var(--code-str)}.hljs-keyword,.hljs-literal{color:var(--code-kw)}
+.hljs-number{color:var(--code-num)}.hljs-built_in,.hljs-title{color:var(--code-fn)}.hljs-meta{color:var(--code-com)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{font:600 14px var(--f-ui);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;display:flex;gap:6px;align-items:center}
+.tab .dot{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.tab[aria-selected="true"]{background:var(--c);border-color:var(--c);color:#fff}
+.tab[aria-selected="true"] .dot{background:#fff}
+.gmeta{font-size:14px;color:var(--muted)}
+.gmeta b{color:var(--ink)}
+.pill{display:inline-block;font-size:12px;border-radius:999px;padding:1px 8px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+.avoid li{color:var(--muted)}
+.empty{color:var(--muted);font-size:14px}
+.hidden-by-search{display:none!important}
+footer{margin-top:48px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:860px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;overflow-x:auto;gap:4px;background:var(--bg);padding-block:8px;border-bottom:1px solid var(--line)}
+  nav.toc a{display:flex;white-space:nowrap;padding:5px 10px;border:1px solid var(--line);background:var(--surface)}
+  nav.toc .tm{display:none}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+  .methods{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two{grid-template-columns:minmax(0,1fr)}
+  .card{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">2학년 데이터 과학 · 수행평가 도우미</div>
+  <h1>데이터 과학 프로젝트 가이드북</h1>
+  <p>수행평가 보고서 양식의 0~8번 순서 그대로, 단계마다 <b>해야 할 일 · 결정 기준 · 수업 시간에 배운 코드 · 문장 틀</b>을 모았어요. 코드는 복사해서 쓰고, <mark style="background:var(--ph);color:var(--ph-fg);border-radius:3px;padding:0 4px">색칠된 부분</mark>만 내 데이터에 맞게 바꾸세요.</p>
+  <div class="flow" id="flow"></div>
+  <div class="methods" id="methods"></div>
+  <div class="search"><span aria-hidden="true">🔍</span><input id="q" type="search" placeholder="찾고 싶은 것 : 결측치, 산점도, merge, 실루엣, KeyError …" aria-label="코드 검색"><kbd>/</kbd></div>
+</header>
+<div class="layout">
+  <nav class="toc" id="toc" aria-label="단계 목차"></nav>
+  <main id="main"></main>
+</div>
+<footer>II단원(데이터 수집·전처리·시각화·통합)과 III단원(회귀·분류·군집·연관) 수업 자료의 코드를 바탕으로 정리했어요. 코드는 예시이므로 내 데이터의 열 이름에 맞게 바꾸고, 실행 결과를 꼭 확인하세요.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+const D = {"steps": [{"id": "s0", "num": "0", "title": "준비", "sub": "분석 방법과 데이터 정하기", "time": "5분", "goal": "탐구 질문의 모양을 보고 분석 방법을 정하고, 쓸 데이터를 고른다.", "todo": ["샘플 데이터 10종 중 하나를 고르거나, 공공 데이터를 직접 내려받는다", "탐구 질문이 \"얼마나 / 맞히기 / 묶기 / 함께\" 중 어떤 모양인지 정한다", "준비 셀(라이브러리 + 한글 폰트)을 실행한다"], "cards": [{"t": "라이브러리 불러오기", "w": "보고서 맨 처음에 한 번", "lesson": "II-1·2차시", "c": "import pandas as pd                 # 표 데이터\nimport numpy as np                  # 계산\nimport matplotlib.pyplot as plt     # 그래프\nimport seaborn as sns               # 예쁜 그래프 (heatmap, pairplot)"}]}, {"id": "s1", "num": "1", "title": "주제 설정", "sub": "탐구 질문과 적합성 점검", "time": "10분", "goal": "데이터로 답할 수 있는 탐구 질문을 한 문장으로 쓰고, 데이터로 해결 가능한 주제인지 점검한다.", "todo": ["관심 분야와 관련 SDGs를 정한다", "탐구 질문을 한 문장으로 쓴다", "분석 방법을 고른 이유와 가설을 쓴다", "적합성 3가지(데이터가 있나 · 분석에 맞나 · 윤리적으로 괜찮나)를 ○/×와 근거로 점검한다"], "frames": ["탐구 질문 : \"○○이(가) 높을수록 △△은(는) 얼마나 달라질까?\" (회귀)", "탐구 질문 : \"○○, □□ 정보로 △△인지 아닌지 맞힐 수 있을까?\" (분류)", "탐구 질문 : \"○○을(를) 비슷한 것끼리 묶으면 어떤 유형이 있을까?\" (군집)", "탐구 질문 : \"○○을(를) 하는 사람은 무엇을 함께 할까?\" (연관)", "가설 : \"○○이(가) 높을수록 △△이(가) 높을 것이다. 왜냐하면 ~ 때문이다.\""], "cards": []}, {"id": "s2", "num": "2", "title": "데이터 수집·소개", "sub": "불러오기 + 데이터와 인사하기", "time": "7분", "goal": "데이터를 불러오고, 4가지 명령어로 규모·정보·요약·미리보기를 확인한다.", "todo": ["데이터 불러오기 (한글이 깨지면 encoding 바꾸기)", "shape → info() → describe() → head() 순서로 확인", "각 열의 뜻과 단위를 파악하고 2번 표를 채운다"], "cards": [{"t": "CSV 파일 불러오기", "w": "데이터 파일을 표(DataFrame)로 만들 때", "lesson": "II-1차시", "c": "df = pd.read_csv('파일이름.csv')\n# 한글이 깨지거나 UnicodeDecodeError가 나면 encoding을 넣어 다시 :\n# df = pd.read_csv('파일이름.csv', encoding='cp949')     (안 되면 'utf-8')"}, {"t": "데이터와 인사하기 ① 규모", "w": "몇 행 × 몇 열인가?", "lesson": "II-1차시", "c": "df.shape            # (행, 열) — 괄호를 붙이지 않는다!"}, {"t": "데이터와 인사하기 ② 정보", "w": "열마다 자료형은? 빈칸(결측치)은?", "lesson": "II-1차시", "c": "df.info()           # non-null 개수가 행 수보다 적으면 → 결측치가 있는 열"}, {"t": "데이터와 인사하기 ③ 요약", "w": "숫자 열의 평균·최솟값·최댓값은?", "lesson": "II-1차시", "c": "df.describe()               # 숫자 열 요약\ndf.describe().round(2)      # 소수 둘째 자리까지"}, {"t": "데이터와 인사하기 ④ 미리보기", "w": "실제 값은 어떻게 생겼나?", "lesson": "II-1차시", "c": "df.head()        # 앞 5줄\ndf.head(10)      # 앞 10줄\ndf.tail()        # 뒤 5줄"}, {"t": "열 이름 · 값 종류 확인", "w": "어떤 열이 있는지, 범주 열에 어떤 값이 있는지", "lesson": "III-3차시", "c": "df.columns                       # 열 이름 목록\ndf['범주열'].unique()            # 어떤 값이 있나\ndf['범주열'].value_counts()      # 값마다 몇 개인가"}, {"t": "열 이름 바꾸기", "w": "영어 열 이름을 한글로, 두 표의 열 이름을 맞출 때", "lesson": "II-3차시", "c": "df = df.rename(columns={'열A': '새이름A', '열B': '새이름B'})"}, {"t": "필요한 열·행만 고르기", "w": "분석할 열만 남기거나, 조건에 맞는 행만 남길 때", "lesson": "III-3차시", "c": "df2 = df[['열A', '열B', '예측할열']]              # 열 고르기 (대괄호 2겹)\ndf2 = df[df['열A'] >= 10]                          # 조건에 맞는 행\ndf2 = df[df['범주열'].isin(['값1', '값2'])]         # 여러 값 중 하나인 행"}]}, {"id": "s3", "num": "3", "title": "전처리", "sub": "결측치 · 이상치 · 형식 바꾸기", "time": "12분", "goal": "결측치와 이상치를 찾아 처리하고, 분석할 수 있는 형태로 바꾼다. 처리 방법에는 반드시 이유를 쓴다.", "todo": ["결측치 확인 → 삭제할지 채울지 결정", "이상치 확인(상자 그림, IQR) → 입력 오류인지 실제 값인지 판단", "정답 정보가 섞인 열(데이터 누수) 빼기", "필요하면 형식 바꾸기 (범주→숫자, 날짜, 정규화, 표 합치기)"], "decide": [["빈칸이 아주 적다 (전체의 5% 이하)", "행 삭제 dropna() — 분석에 큰 영향 없음"], ["빈칸이 많고, 숫자 열이다", "평균·중앙값으로 채우기 fillna() — 이상치가 있으면 중앙값"], ["예측할 정답 열이 비었다", "반드시 삭제 — 가짜 정답으로 학습하면 안 됨"], ["이상치가 입력 오류다 (사람 키 999cm 등)", "제거"], ["이상치가 실제로 일어날 수 있는 값이다", "유지 — 이유를 3-②에 쓰기"]], "cards": [{"t": "결측치 개수 세기", "w": "어느 열에 빈칸이 몇 개인지", "lesson": "II-1차시", "c": "df.isna().sum()            # 열별 결측치 수\ndf.isna().sum().sum()      # 전체 결측치 수"}, {"t": "결측치 삭제", "w": "빈칸이 있는 행을 지울 때", "lesson": "II-1차시", "c": "df = df.dropna(axis='rows').reset_index(drop=True)     # 빈칸 있는 행 삭제 + 번호 다시 매기기\ndf = df.dropna(subset=['예측할열'])                     # 특정 열이 빈 행만 삭제"}, {"t": "결측치 채우기", "w": "빈칸을 평균이나 중앙값으로 바꿀 때", "lesson": "II-1차시", "c": "df['열A'] = df['열A'].fillna(df['열A'].mean())       # 평균으로\ndf['열A'] = df['열A'].fillna(df['열A'].median())     # 중앙값으로 (이상치가 있을 때)"}, {"t": "말이 안 되는 값을 결측치로", "w": "음수 농도, \"-\" 같은 기호가 섞였을 때", "lesson": "II-1차시", "c": "df['열A'] = df['열A'].where(df['열A'] >= 0)                 # 0보다 작으면 → 결측치\ndf['열A'] = pd.to_numeric(df['열A'], errors='coerce')       # '-' 같은 글자 → 결측치(숫자로 변환)"}, {"t": "상자 그림으로 이상치 보기", "w": "수염(울타리) 밖의 점 = 이상치", "lesson": "II-1차시", "c": "plt.figure(figsize=(8, 4))\nsns.boxplot(data=df[['열A', '열B']])\nplt.title('이상치 확인')\nplt.show()"}, {"t": "IQR로 이상치 제거 (함수)", "w": "Q1-1.5×IQR ~ Q3+1.5×IQR 밖의 행을 지울 때", "lesson": "II-2차시", "c": "def 이상치제거(데이터, 속성):\n    Q1 = 데이터[속성].quantile(0.25)\n    Q3 = 데이터[속성].quantile(0.75)\n    IQR = Q3 - Q1\n    return 데이터[(데이터[속성] >= Q1 - 1.5 * IQR) & (데이터[속성] <= Q3 + 1.5 * IQR)]\n\nprint('제거 전', df.shape)\ndf2 = 이상치제거(df, '열A')\nprint('제거 후', df2.shape)"}, {"t": "큰 값부터 보기", "w": "이상치가 어떤 행인지 직접 확인할 때", "lesson": "II-1차시", "c": "df.sort_values('열A', ascending=False).head(10)"}, {"t": "정규화 (0~1로 눈금 맞추기)", "w": "단위가 다른 열을 함께 쓸 때 (군집, 로지스틱 회귀)", "lesson": "II-1차시 · III-1차시", "c": "from sklearn.preprocessing import MinMaxScaler\nscaler = MinMaxScaler()\nX_scaled = scaler.fit_transform(df[['열A', '열B']])\nX_scaled = pd.DataFrame(X_scaled, columns=['열A', '열B'])\n# 직접 계산 : (X - 최솟값) ÷ (최댓값 - 최솟값)"}, {"t": "글자(범주)를 숫자로", "w": "성별·지역처럼 글자로 된 열을 모델에 넣을 때", "lesson": "III-5·7차시", "c": "from sklearn.preprocessing import LabelEncoder\ndf['범주열'] = LabelEncoder().fit_transform(df['범주열'])     # 예) 남→1, 여→0"}, {"t": "날짜 다루기", "w": "날짜 열에서 연도·월을 뽑을 때", "lesson": "II-2차시", "c": "df['날짜열'] = pd.to_datetime(df['날짜열'])\ndf['연도'] = df['날짜열'].dt.year\ndf['월'] = df['날짜열'].dt.month"}, {"t": "구조가 같은 표 이어 붙이기 (concat)", "w": "2017년·2018년 파일처럼 열이 같은 표를 위아래로", "lesson": "II-3차시", "c": "df1 = pd.read_csv('파일1.csv')\ndf2 = pd.read_csv('파일2.csv')\ndf = pd.concat([df1, df2], axis=0, ignore_index=True)"}, {"t": "구조가 다른 표 합치기 (merge)", "w": "공통 열(지역·날짜 등)로 두 표를 옆으로", "lesson": "II-3차시", "c": "df = pd.merge(df1, df2, how='inner', on='키열')        # 양쪽에 다 있는 것만\ndf = pd.merge(df1, df2, how='left', on='키열')         # 왼쪽 표 기준\ndf = pd.merge(df1, df2, how='inner', on=['지역', '연도'])   # 기준 열이 2개일 때"}, {"t": "중복 행 지우기", "w": "같은 데이터가 두 번 들어 있을 때", "lesson": "", "c": "print('중복 행 :', df.duplicated().sum())\ndf = df.drop_duplicates()"}, {"t": "필요 없는 열 빼기", "w": "번호·이름처럼 의미 없는 열, 정답을 알려 주는 열을 뺄 때", "lesson": "III-1·7차시", "c": "df = df.drop(['열A', '열B'], axis=1)"}]}, {"id": "s4", "num": "4", "title": "탐색·시각화", "sub": "특징과 관계 찾기", "time": "16분", "goal": "기술 통계와 목적에 맞는 그래프 2개 이상으로 데이터의 특징과 관계를 찾고, 5번 분석 방법을 정하는 근거로 삼는다.", "todo": ["describe()와 groupby()로 숫자 요약", "목적에 맞는 그래프 2개 이상 그리기 (제목·축 이름 필수)", "그래프마다 ㉠ 종류·변수 ㉡ 확인하려던 것 ㉢ 발견한 사실 2가지 ㉣ 의미 쓰기"], "decide": [["한 변수의 분포를 보고 싶다", "히스토그램 plt.hist / sns.histplot"], ["두 숫자 변수의 관계", "산점도 plt.scatter"], ["시간에 따른 변화", "선 그래프 plt.plot"], ["범주별 평균·개수 비교", "막대그래프 plt.bar / sns.countplot"], ["집단별 분포 차이, 이상치", "상자 그림 sns.boxplot"], ["전체 중 비율", "원그래프 plt.pie"], ["여러 변수의 관계를 한눈에", "상관계수 히트맵 sns.heatmap / sns.pairplot"]], "frames": ["㉢ 발견한 사실 : \"○○이(가) 커질수록 △△도 커지는 양의 관계이고, 상관계수는 0.○○이다.\"", "㉢ 발견한 사실 : \"대부분 ○~○ 사이에 몰려 있고, ○ 이상인 값이 ○개 있다.\"", "㉣ 의미 : \"가설과 같다(다르다). 그래서 5번에서 ○○ 방법을 쓰기로 했다.\""], "cards": [{"t": "집단별 평균 (groupby)", "w": "범주·연도별로 평균을 비교할 때", "lesson": "II-2·3차시", "c": "df.groupby('범주열')['열A'].mean().round(2)\ndf.groupby('범주열')[['열A', '열B']].mean().round(2)"}, {"t": "그래프 꾸미기 기본 틀", "w": "모든 그래프에 공통 — 제목·축 이름은 꼭!", "lesson": "II-2차시", "c": "plt.figure(figsize=(8, 4))      # 그래프 크기\n# ... 여기에 그래프 명령 ...\nplt.title('그래프 제목', fontsize=14)\nplt.xlabel('x축 이름')\nplt.ylabel('y축 이름')\nplt.legend()                    # label을 넣었다면 범례\nplt.xticks(rotation=45)         # x축 글자가 겹치면 기울이기\nplt.show()"}, {"t": "히스토그램 — 분포", "w": "한 변수의 값이 어디에 몰려 있나", "lesson": "II-2차시", "c": "plt.hist(df['열A'], bins=30)\nplt.title('열A의 분포'); plt.xlabel('열A'); plt.ylabel('빈도')\nplt.show()\n# 또는 sns.histplot(df['열A'])"}, {"t": "산점도 — 두 변수의 관계", "w": "x가 커질 때 y는 어떻게 되나 (직선? 곡선?)", "lesson": "II-2차시", "c": "plt.scatter(df['열A'], df['예측할열'], alpha=0.5)\nplt.title('열A와 예측할열의 관계'); plt.xlabel('열A'); plt.ylabel('예측할열')\nplt.show()"}, {"t": "산점도 — 집단별 색 구분", "w": "범주에 따라 점 색을 다르게", "lesson": "III-7차시", "c": "sns.scatterplot(x='열A', y='열B', hue='범주열', data=df)\nplt.title('범주별 열A와 열B')\nplt.show()"}, {"t": "선 그래프 — 시간에 따른 변화", "w": "연도·월별 추이", "lesson": "II-2차시", "c": "월평균 = df.groupby('월')['열A'].mean()\nplt.plot(월평균.index, 월평균.values, marker='o', label='열A')\nplt.title('월별 열A 평균'); plt.xlabel('월'); plt.ylabel('열A'); plt.legend()\nplt.show()"}, {"t": "막대그래프 — 범주별 비교", "w": "지역·종류별 평균 비교", "lesson": "II-2차시", "c": "평균 = df.groupby('범주열')['열A'].mean().sort_values(ascending=False)\nplt.bar(평균.index, 평균.values)\nplt.title('범주별 열A 평균'); plt.xticks(rotation=45)\nplt.show()"}, {"t": "개수 막대 — 범주별 몇 개?", "w": "정답(범주)이 고르게 있는지 확인", "lesson": "III-3차시", "c": "sns.countplot(x='범주열', data=df)\nplt.title('범주별 개수')\nplt.show()"}, {"t": "상자 그림 — 집단별 분포 차이", "w": "범주에 따라 숫자 값이 어떻게 다른가", "lesson": "II-1차시", "c": "sns.boxplot(x='범주열', y='열A', data=df)\nplt.title('범주별 열A 분포')\nplt.show()"}, {"t": "원그래프 — 비율", "w": "전체 중 각 범주가 차지하는 비율", "lesson": "II-2차시", "c": "개수 = df['범주열'].value_counts()\nplt.pie(개수.values, labels=개수.index, autopct='%1.1f%%')\nplt.title('범주 비율')\nplt.show()"}, {"t": "상관계수 + 히트맵", "w": "여러 숫자 변수 사이의 관계를 한눈에", "lesson": "II-2차시 · III-1·2차시", "c": "corr = df.corr(numeric_only=True).round(2)\nplt.figure(figsize=(7, 5))\nsns.heatmap(corr, annot=True, cmap='coolwarm', vmin=-1, vmax=1)\nplt.title('변수 간 상관관계')\nplt.show()\ncorr['예측할열'].sort_values(ascending=False)      # 예측할 열과 관계가 큰 순서"}, {"t": "짝 그림 (pairplot)", "w": "모든 변수 쌍의 산점도를 한 번에 (열이 적을 때)", "lesson": "II-2차시 · III-7차시", "c": "sns.pairplot(df[['열A', '열B', '예측할열']])\nplt.show()"}, {"t": "여러 그래프 나란히", "w": "그래프 2~3개를 한 줄에", "lesson": "III-3차시", "c": "fig, ax = plt.subplots(1, 3, figsize=(14, 4))\nsns.histplot(df['열A'], ax=ax[0])\nsns.histplot(df['열B'], ax=ax[1])\nsns.histplot(df['예측할열'], ax=ax[2])\nplt.tight_layout(); plt.show()"}]}, {"id": "s5", "num": "5", "title": "모델링·평가", "sub": "2가지 이상 방법 비교", "time": "20분", "goal": "탐구 질문에 맞는 분석 방법으로 2가지 이상을 실행하고, 평가 지표를 숫자로 비교해 최종 방법을 고른다.", "todo": ["아래에서 내 분석 방법(회귀 · 분류 · 군집 · 연관) 탭을 고른다", "방법 2가지 이상을 실행한다", "지표를 표로 모아 비교한다", "최종 방법과 이유를 쓴다 (성능 + 목적 + 해석하기 쉬운가)"], "groups": [{"id": "reg", "name": "회귀", "ask": "숫자를 얼마나 예측?", "metric": "R² (1에 가까울수록 좋음) · MSE·MAE (작을수록 좋음)", "cards": [{"t": "① X와 y 나누기", "w": "X = 예측에 쓰는 재료, y = 정답(숫자)", "lesson": "III-2차시", "c": "X = df[['열A', '열B']]         # 재료 — 대괄호 2겹 [[ ]] = 표\ny = df['예측할열']              # 정답 — 대괄호 1겹"}, {"t": "② 훈련용·시험용 나누기", "w": "공부용(훈련)으로 배우고 시험용(테스트)으로 평가", "lesson": "III-1·2차시", "c": "from sklearn.model_selection import train_test_split\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nprint('공부용 :', X_train.shape, ' 시험용 :', X_test.shape)"}, {"t": "③ 선형 회귀 학습·예측", "w": "y = ax + b 직선(평면)으로 예측", "lesson": "III-2차시", "c": "from sklearn.linear_model import LinearRegression\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)                     # 공부하기\nprint('a (가중치) :', model.coef_)\nprint('b (편향) :', model.intercept_)\npred = model.predict(X_test)                    # 시험 보기"}, {"t": "④ 평가 — R²와 MSE", "w": "연습 점수(훈련)와 실전 점수(테스트) 비교", "lesson": "III-2차시", "c": "from sklearn.metrics import r2_score, mean_squared_error\nprint('연습 점수 R² :', r2_score(y_train, model.predict(X_train)))\nprint('실전 점수 R² :', r2_score(y_test, pred))          # 정답을 먼저 넣는다\nprint('MSE :', mean_squared_error(y_test, pred))"}, {"t": "⑤ 비교용 두 번째 모델", "w": "단순 회귀 vs 다중 회귀, 또는 다른 알고리즘", "lesson": "III-2·5차시", "c": "# (가) 변수 1개 vs 여러 개 비교\nmodel1 = LinearRegression().fit(X_train[['열A']], y_train)\nprint('변수 1개 R² :', r2_score(y_test, model1.predict(X_test[['열A']])))\n\n# (나) 다른 알고리즘 — 곡선·복잡한 관계에 강함\nfrom sklearn.tree import DecisionTreeRegressor\nfrom sklearn.ensemble import RandomForestRegressor\nmodel2 = RandomForestRegressor(random_state=42).fit(X_train, y_train)\nprint('랜덤포레스트 R² :', r2_score(y_test, model2.predict(X_test)))"}, {"t": "⑥ 결과를 표로 모으기", "w": "5-② 비교 결과 쓰기 전에", "lesson": "", "c": "결과 = pd.DataFrame({\n    '방법': ['선형 회귀(변수 1개)', '선형 회귀(변수 여러 개)', '랜덤포레스트'],\n    '테스트 R²': [r2_score(y_test, model1.predict(X_test[['열A']])),\n                  r2_score(y_test, pred),\n                  r2_score(y_test, model2.predict(X_test))]}).round(3)\n결과"}, {"t": "⑦ 새로운 값 예측하기", "w": "\"만약 ○○이라면?\" — 6번 활용 방안의 근거", "lesson": "III-2·5차시", "c": "새값 = pd.DataFrame({'열A': [30], '열B': [5]})     # 학습할 때와 같은 열 이름\nmodel.predict(새값)"}, {"t": "(참고) 실제값 vs 예측값 그래프", "w": "예측이 얼마나 맞는지 눈으로", "lesson": "", "c": "plt.scatter(y_test, pred, alpha=0.5)\nplt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--')   # 대각선 = 완벽한 예측\nplt.xlabel('실제값'); plt.ylabel('예측값'); plt.title('실제값 vs 예측값')\nplt.show()"}]}, {"id": "clf", "name": "분류", "ask": "범주를 맞히기?", "metric": "정확도 · 정밀도 · 재현율 (1에 가까울수록 좋음) · 오분류표", "cards": [{"t": "① X와 y 나누기", "w": "y = 정답(범주)", "lesson": "III-3차시", "c": "X = df.drop(['정답열'], axis=1)      # 정답 열만 빼고 전부 재료\ny = df['정답열']\n# 글자로 된 열이 X에 있으면 → 3번 LabelEncoder로 먼저 숫자로!"}, {"t": "② 훈련용·시험용 나누기", "w": "범주 비율을 유지하려면 stratify", "lesson": "III-1·3차시", "c": "from sklearn.model_selection import train_test_split\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)"}, {"t": "③ 로지스틱 회귀", "w": "기본 분류 모델", "lesson": "III-1·3·5차시", "c": "from sklearn.linear_model import LogisticRegression\nLR = LogisticRegression(max_iter=1000)\nLR.fit(X_train, y_train)\npred_LR = LR.predict(X_test)\nLR.predict_proba(X_test[:1])          # 첫 번째 데이터가 각 범주일 확률"}, {"t": "④ 의사결정트리", "w": "규칙(스무고개)을 눈으로 볼 수 있는 모델", "lesson": "III-3차시", "c": "from sklearn.tree import DecisionTreeClassifier, plot_tree\nDT = DecisionTreeClassifier(max_depth=3, random_state=42)\nDT.fit(X_train, y_train)\npred_DT = DT.predict(X_test)\n\nplt.figure(figsize=(14, 6))\nplot_tree(DT, feature_names=list(X.columns), filled=True)\nplt.show()"}, {"t": "⑤ 평가 — 정확도·정밀도·재현율", "w": "두 모델을 같은 지표로 비교", "lesson": "III-3·5차시", "c": "from sklearn.metrics import accuracy_score, precision_score, recall_score\nfor 이름, p in [('로지스틱', pred_LR), ('의사결정트리', pred_DT)]:\n    print(이름, '정확도', round(accuracy_score(y_test, p), 3),\n          '| 재현율', round(recall_score(y_test, p, average='macro'), 3))\n# 정답이 0/1 두 가지면 average='macro' 없이 precision_score(y_test, p)도 가능"}, {"t": "⑥ 오분류표 (confusion matrix)", "w": "어떤 범주를 헷갈렸는지", "lesson": "III-3·5차시", "c": "from sklearn.metrics import confusion_matrix\ncm = confusion_matrix(y_test, pred_LR)\nsns.heatmap(cm, annot=True, fmt='d', cmap='Blues')\nplt.xlabel('예측'); plt.ylabel('실제'); plt.title('로지스틱 회귀 오분류표')\nplt.show()"}, {"t": "(참고) 단위가 다른 변수는 정규화 후 로지스틱", "w": "정확도가 낮거나 경고가 뜰 때", "lesson": "III-1차시", "c": "from sklearn.preprocessing import MinMaxScaler\nscaler = MinMaxScaler().fit(X_train)\nLR2 = LogisticRegression(max_iter=1000).fit(scaler.transform(X_train), y_train)\nprint('정규화 후 정확도 :', accuracy_score(y_test, LR2.predict(scaler.transform(X_test))))"}]}, {"id": "clu", "name": "군집", "ask": "비슷한 것끼리 묶기?", "metric": "실루엣 계수 (-1~1, 1에 가까울수록 잘 묶임) · 군집별 평균", "cards": [{"t": "① 묶을 기준 열 고르기 + 정규화", "w": "정답(y)은 쓰지 않는다 — 비지도학습", "lesson": "III-7차시", "c": "X = df[['열A', '열B']]                       # 묶는 기준\nfrom sklearn.preprocessing import MinMaxScaler\nX_s = MinMaxScaler().fit_transform(X)       # 단위가 다르면 꼭 정규화"}, {"t": "② 군집 수(K) 정하기 — 실루엣 계수", "w": "K를 바꿔 가며 가장 높은 값 찾기", "lesson": "III-7차시", "c": "from sklearn.cluster import KMeans\nfrom sklearn.metrics import silhouette_score\nfor k in range(2, 7):\n    km = KMeans(n_clusters=k, random_state=42).fit(X_s)\n    print(k, round(silhouette_score(X_s, km.labels_), 3))"}, {"t": "③ K-평균 군집", "w": "정한 K로 묶고 결과를 열로 붙이기", "lesson": "III-7차시", "c": "kmeans = KMeans(n_clusters=3, random_state=42)\nkmeans.fit(X_s)                      # fit(X) — y가 없다!\nresult = df.copy()\nresult['군집'] = kmeans.labels_\nresult['군집'].value_counts()"}, {"t": "④ 군집별 특징 → 이름 붙이기", "w": "군집마다 평균을 보고 \"○○형\"이라고 이름 짓기", "lesson": "III-7차시", "c": "result.groupby('군집')[['열A', '열B']].mean().round(1)"}, {"t": "⑤ 군집 결과 그래프", "w": "점 색 = 군집", "lesson": "III-7차시", "c": "sns.scatterplot(x='열A', y='열B', hue='군집', data=result, palette='Set2')\nplt.title('K-평균 군집 결과')\nplt.show()"}, {"t": "⑥ 비교용 두 번째 방법", "w": "다른 K와 비교하거나, 계층적 군집과 비교", "lesson": "", "c": "# (가) K를 바꿔 비교 : 위 ②의 실루엣 표 활용\n# (나) 다른 알고리즘 : 계층적 군집\nfrom sklearn.cluster import AgglomerativeClustering\nhc = AgglomerativeClustering(n_clusters=3).fit(X_s)\nprint('K-평균 실루엣 :', round(silhouette_score(X_s, kmeans.labels_), 3))\nprint('계층적 군집 실루엣 :', round(silhouette_score(X_s, hc.labels_), 3))"}]}, {"id": "asc", "name": "연관", "ask": "무엇이 함께 나타나나?", "metric": "지지도(자주?) · 신뢰도(믿을 만?) · 향상도(1보다 크면 함께)", "cards": [{"t": "(처음 한 번) mlxtend 설치", "w": "ModuleNotFoundError: mlxtend 가 나올 때", "lesson": "III-10차시", "c": "!pip install mlxtend"}, {"t": "① 한 칸에 여러 항목 → 목록으로", "w": "\"독서,운동,게임\"처럼 쉼표로 적힌 열", "lesson": "III-10차시", "c": "df['항목열'] = df['항목열'].str.replace(' ', '')     # 띄어쓰기 지우기\n목록 = df['항목열'].str.split(',')                    # '독서,운동' → ['독서', '운동']"}, {"t": "② 장바구니 표 만들기 (TransactionEncoder)", "w": "사람(주문) × 항목 True/False 표", "lesson": "III-10차시", "c": "from mlxtend.preprocessing import TransactionEncoder\nte = TransactionEncoder()\nitems = pd.DataFrame(te.fit(목록).transform(목록), columns=te.columns_)\nitems.sum().sort_values(ascending=False).head(10)     # 많이 나온 항목 TOP 10"}, {"t": "③ 지지도·신뢰도·향상도 직접 계산", "w": "규칙 하나(A → B)를 손으로 확인", "lesson": "III-10차시", "c": "A = items['항목1']; B = items['항목2']\n지지도 = (A & B).mean()              # A와 B가 함께 나온 비율\n신뢰도 = (A & B).mean() / A.mean()   # A가 있을 때 B도 있을 확률\n향상도 = 신뢰도 / B.mean()            # 1보다 크면 '함께' 나오는 관계\nprint(지지도, 신뢰도, 향상도)"}, {"t": "④ apriori로 규칙 한꺼번에 찾기", "w": "항목이 많을 때", "lesson": "III-10차시", "c": "from mlxtend.frequent_patterns import apriori, association_rules\nfi = apriori(items, min_support=0.1, use_colnames=True)                 # 자주 나오는 조합\nrules = association_rules(fi, metric='confidence', min_threshold=0.5)   # 규칙 만들기\nprint('규칙 수 :', len(rules))          # 0개면 min_support나 min_threshold를 낮춰 보기\nrules = rules.sort_values('lift', ascending=False)\nrules[['antecedents', 'consequents', 'support', 'confidence', 'lift']].head(10)"}, {"t": "⑤ 비교용 두 번째 방법", "w": "기준값을 바꿔 비교하거나, 다른 방법과 비교", "lesson": "", "c": "# (가) 기준을 바꿔 비교 : min_support 0.1 vs 0.05, 신뢰도 순 vs 향상도 순\nrules2 = association_rules(apriori(items, min_support=0.05, use_colnames=True),\n                           metric='lift', min_threshold=1.2)\nprint('규칙 수 :', len(rules), '→', len(rules2))\n# (나) 의사결정트리로 '항목2를 할까?'를 예측해 규칙과 비교 (분류 탭 ④ 참고)"}]}]}, {"id": "s6", "num": "6", "title": "결론·사회적 영향", "sub": "해석 · 한계 · 활용", "time": "15분", "goal": "탐구 질문에 숫자와 그래프를 근거로 답하고, 한계와 사회적 영향(긍정·부정), 활용 방안을 내 말로 쓴다.", "todo": ["탐구 질문에 대한 답 + 근거 숫자", "상관관계를 인과관계로 단정하지 않았는지 점검", "한계 2가지 이상", "긍정적 영향 · 부정적 영향(윤리) 각 1가지 이상", "활용 방안 : 누가 / 어떤 결정을 / 어떻게"], "frames": ["6-① \"가설은 맞았다(틀렸다). ○○ 그래프에서 ~였고, 최종 모델의 R²(정확도)는 0.○○였다.\"", "6-② \"○○와 △△는 관계가 있지만 ○○ 때문에 △△가 생긴다고 단정할 수는 없다. □□ 같은 다른 요인이 있을 수 있다.\"", "6-② 한계 : \"데이터가 ○○년 / ○○ 지역만이라 ~에 일반화하기 어렵다.\" · \"○○ 정보가 없다.\"", "6-④ 부정적 영향 : \"결과가 ○○에 대한 낙인(차별)이 될 수 있다.\" · \"개인정보가 ~에 쓰일 위험이 있다.\"", "6-⑤ 활용 : \"(누가) ○○이(가) (어떤 결정) ~을 정할 때, (어떻게) 예측값이 ○ 이상이면 ~하도록 쓸 수 있다.\""], "metrics": [["R² (결정계수)", "회귀", "1에 가까울수록 좋음. 0.7 이상이면 설명력이 높은 편, 0에 가까우면 거의 설명 못 함"], ["MSE · MAE", "회귀", "오차의 크기. 작을수록 좋음. MAE는 \"평균 ○만큼 틀린다\"로 해석"], ["정확도", "분류", "전체 중 맞힌 비율. 범주가 한쪽으로 치우치면 믿기 어려움"], ["정밀도", "분류", "\"그렇다\"고 한 것 중 진짜 맞은 비율 (잘못 말하기 줄이기)"], ["재현율", "분류", "진짜인 것 중 찾아낸 비율 (놓치기 줄이기)"], ["실루엣 계수", "군집", "-1~1. 1에 가까울수록 잘 묶임. 0.5 이상이면 뚜렷한 편"], ["지지도 · 신뢰도", "연관", "얼마나 자주 함께 나오나 · A가 있을 때 B도 있을 확률"], ["향상도", "연관", "1보다 크면 함께 나오는 관계, 1이면 우연, 1보다 작으면 오히려 따로"]], "cards": []}, {"id": "s7", "num": "7", "title": "AI 활용 기록", "sub": "에이전트에게 잘 묻고 기록하기", "time": "7분", "goal": "에이전트에게 맥락을 담아 질문하고, 받은 코드를 확인한 방법과 함께 기록한다.", "todo": ["중요한 대화 최대 3건 기록", "반영 방식(직접 활용 · 수정 · 참고) 표시", "내가 확인한 방법과 고친 점 쓰기"], "prompts": ["\"제 데이터프레임 df에는 [열 이름들] 열이 있어요. [하고 싶은 것]을 하는 pandas 코드를 알려 주세요.\"", "\"[오류 메시지 그대로 붙여넣기] 이 오류가 났어요. 제 코드는 [코드]예요. 왜 생기고 어떻게 고치나요?\"", "\"이 코드의 각 줄이 무엇을 하는지 고등학생이 이해할 수 있게 설명해 주세요.\"", "\"[열A]와 [열B]의 관계를 보려면 어떤 그래프가 좋을지 이유와 함께 2가지 추천해 주세요.\"", "\"선형 회귀와 랜덤포레스트를 같은 테스트 데이터로 비교하는 표를 만드는 코드를 알려 주세요.\""], "avoid": ["\"보고서 써 줘\", \"결론 써 줘\" — ✍️ 칸은 내 말로 써야 해요", "이름·학번·학교명 같은 개인정보 입력", "받은 코드를 실행·확인하지 않고 그대로 두기 — 구술평가에서 설명할 수 있어야 해요"], "cards": []}, {"id": "s8", "num": "8", "title": "제출 전 점검", "sub": "마지막 8분", "time": "8분", "goal": "모든 셀이 오류 없이 실행되는지 확인하고, 구술평가 3질문에 답할 준비를 한다.", "todo": ["[커널 재시작 후 전체 실행]으로 오류 확인", "빈 ✍️ 문항이 없는지 확인", "저장(Ctrl + S) 후 제출", "🎤 ❶ 수집·전처리를 왜, 어떻게? ❷ 그 그래프를 왜? 무엇을 알 수 있나? ❸ 결과를 어떻게 활용?"], "cards": []}], "errors": [["UnicodeDecodeError / 한글이 깨짐", "pd.read_csv('파일.csv', encoding='cp949') 또는 encoding='utf-8' 로 바꿔 보기"], ["KeyError: '열이름'", "열 이름 오타·띄어쓰기 확인 → df.columns 로 정확한 이름 복사"], ["TypeError: 'tuple' object is not callable", "df.shape() → df.shape (괄호 빼기)"], ["Expected 2D array, got 1D array", "X = df['열A'] → X = df[['열A']] (대괄호 2겹)"], ["could not convert string to float", "글자 열이 X에 들어 있음 → drop()으로 빼거나 LabelEncoder로 숫자로"], ["Input X contains NaN", "결측치가 남아 있음 → df.dropna() 또는 fillna() 먼저"], ["ValueError: could not convert ... (corr)", "df.corr(numeric_only=True) — 숫자 열만 계산"], ["NameError: name 'df' is not defined", "위쪽 셀을 먼저 실행하지 않았음 → 위에서부터 차례로 실행"], ["Found input variables with inconsistent numbers of samples", "X와 y의 행 수가 다름 → 같은 표에서 나눴는지, dropna를 한쪽만 했는지 확인"], ["ConvergenceWarning (로지스틱 회귀)", "LogisticRegression(max_iter=1000) 으로 늘리거나 정규화 먼저"], ["그래프 한글이 □□로 나옴", "맨 위 [준비] 셀(한글 폰트 설정)을 다시 실행"], ["ModuleNotFoundError: No module named 'mlxtend'", "!pip install mlxtend 실행 후 다시"], ["그래프가 겹쳐서 이상하게 나옴", "그래프마다 plt.figure()로 시작하고 plt.show()로 끝내기"]], "methods": [{"id": "reg", "name": "회귀", "q": "\"○○로 △△(숫자)를 얼마나 예측할 수 있을까?\"", "y": "숫자 (가격, 점수, 농도…)", "learn": "지도학습", "compare": "선형 회귀 vs 다중 회귀 / 랜덤포레스트", "metric": "R², MSE", "color": "blue"}, {"id": "clf", "name": "분류", "q": "\"○○로 △△(범주)를 맞힐 수 있을까?\"", "y": "범주 (예/아니오, 장르…)", "learn": "지도학습", "compare": "로지스틱 회귀 vs 의사결정트리", "metric": "정확도, 재현율, 오분류표", "color": "green"}, {"id": "clu", "name": "군집", "q": "\"비슷한 것끼리 묶으면 어떤 유형이 있을까?\"", "y": "없음 (정답 없이 묶기)", "learn": "비지도학습", "compare": "K를 바꿔 비교 / K-평균 vs 계층적", "metric": "실루엣 계수", "color": "orange"}, {"id": "asc", "name": "연관", "q": "\"무엇과 무엇이 함께 나타날까?\"", "y": "없음 (함께 나오는 규칙)", "learn": "비지도학습", "compare": "기준값 비교 / 규칙 vs 의사결정트리", "metric": "지지도, 신뢰도, 향상도", "color": "purple"}], "ph": ["파일이름.csv", "파일1.csv", "파일2.csv", "예측할열", "정답열", "범주열", "날짜열", "열A", "열B", "항목열", "항목1", "항목2", "키열", "값1", "값2", "새이름A", "새이름B"], "flow": ["문제 정의", "데이터 수집", "전처리·탐색", "모델링", "평가", "활용"]};
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store = {get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+               set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const colorOf = {blue:'var(--blue)',green:'var(--green)',orange:'var(--orange)',purple:'var(--purple)'};
+const PH = [...D.ph].sort((a,b)=>b.length-a.length);
+
+function hl(code){
+  let h;
+  try{ h = window.hljs ? hljs.highlight(code,{language:'python'}).value : esc(code); }catch(e){ h = esc(code); }
+  for(const p of PH){ const e = esc(p); h = h.split(e).join('<mark>'+e+'</mark>'); }
+  return h;
+}
+function card(c){
+  const id = 'c'+Math.random().toString(36).slice(2,8);
+  return `<article class="card" data-k="${esc((c.t+' '+c.w+' '+c.c).toLowerCase())}">
+    <div class="hd"><b>${esc(c.t)}</b><span class="w">${esc(c.w)}</span>${c.lesson?`<span class="ls">수업 : ${esc(c.lesson)}</span>`:''}</div>
+    <div class="code"><button class="copy" data-for="${id}" type="button">복사</button><pre id="${id}"><code>${hl(c.c)}</code></pre></div>
+  </article>`;
+}
+function todo(s){
+  const done = store.get('todo-'+s.id, []);
+  return `<div class="box"><h3>해야 할 일</h3><ul class="todo">${s.todo.map((t,i)=>`<li><label><input type="checkbox" id="t-${s.id}-${i}" data-s="${s.id}" data-i="${i}" ${done.includes(i)?'checked':''}><span>${esc(t)}</span></label></li>`).join('')}</ul></div>`;
+}
+function decide(rows, h1, h2){
+  return `<div class="box"><h3>이럴 땐 이렇게</h3><div class="tbl"><table><thead><tr><th>${h1}</th><th>${h2}</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table></div></div>`;
+}
+function frames(list, title){ return `<div class="box"><h3>${title||'✍️ 문장 틀'}</h3><ul class="frames">${list.map(f=>`<li>${esc(f)}</li>`).join('')}</ul></div>`; }
+
+function render(){
+  $('#flow').innerHTML = D.flow.map((f,i)=>`<span>${i+1} ${esc(f)}</span>`).join('<i>→</i>');
+  $('#methods').innerHTML = D.methods.map(m=>`<button class="m" type="button" data-g="${m.id}" style="--c:${colorOf[m.color]}">
+     <b>${m.name}</b><span class="q">${esc(m.q)}</span><small>정답 : ${esc(m.y)} · ${m.learn}<br>비교 : ${esc(m.compare)}<br>지표 : ${esc(m.metric)}</small></button>`).join('');
+  const toc = D.steps.map(s=>`<a href="#${s.id}" data-id="${s.id}"><span class="n">${s.num}</span><span>${esc(s.title)}</span><span class="tm">${s.time}</span></a>`).join('')
+            + `<a href="#err" data-id="err"><span class="n">!</span><span>오류 사전</span><span class="tm"></span></a>`;
+  $('#toc').innerHTML = toc;
+  let out = '';
+  for(const s of D.steps){
+    let body = `<p class="goal">${esc(s.goal)}</p>`;
+    const side = [todo(s)];
+    if(s.decide) side.push(decide(s.decide, '상황', '방법'));
+    body += `<div class="two">${side.join('')}${side.length===1 && s.frames ? frames(s.frames) : ''}</div>`;
+    if(s.frames && side.length!==1) body += frames(s.frames);
+    if(s.id==='s0'){
+      body += `<div class="box"><h3>분석 방법 고르기</h3><div class="tbl"><table><thead><tr><th>방법</th><th>탐구 질문의 모양</th><th>정답(y)</th><th>5번에서 비교</th><th>평가 지표</th></tr></thead><tbody>${D.methods.map(m=>`<tr><td><b style="color:${colorOf[m.color]}">${m.name}</b></td><td>${esc(m.q)}</td><td>${esc(m.y)}</td><td>${esc(m.compare)}</td><td>${esc(m.metric)}</td></tr>`).join('')}</tbody></table></div></div>`;
+    }
+    if(s.groups){
+      const sel = store.get('group', 'reg');
+      body += `<div class="tabs" role="tablist">${s.groups.map(g=>{const m=D.methods.find(x=>x.id===g.id);return `<button class="tab" role="tab" type="button" id="tab-${g.id}" aria-selected="${g.id===sel}" data-g="${g.id}" style="--c:${colorOf[m.color]}"><span class="dot"></span>${g.name}</button>`}).join('')}</div>`;
+      body += s.groups.map(g=>`<div class="grp" data-g="${g.id}" ${g.id===sel?'':'hidden'}>
+        <p class="gmeta"><b>${g.name}</b> — ${esc(g.ask)} · 평가 지표 : ${esc(g.metric)}</p>
+        <div class="cards">${g.cards.map(card).join('')}</div></div>`).join('');
+    }
+    if(s.cards && s.cards.length) body += `<div class="cards">${s.cards.map(card).join('')}</div>`;
+    if(s.metrics) body += `<div class="box"><h3>지표 읽는 법</h3><div class="tbl"><table><thead><tr><th>지표</th><th>방법</th><th>뜻</th></tr></thead><tbody>${s.metrics.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('')}</tbody></table></div></div>`;
+    if(s.prompts) body += `<div class="two">${frames(s.prompts,'🤖 에이전트에게 이렇게 물어보기')}<div class="box avoid"><h3>이렇게는 하지 않기</h3><ul class="frames">${s.avoid.map(a=>`<li>${esc(a)}</li>`).join('')}</ul></div></div>`;
+    out += `<section class="step" id="${s.id}"><div class="sh"><span class="num">${s.num}</span><h2>${esc(s.title)}</h2><span class="sub">${esc(s.sub)}</span><span class="time">수행평가 ${s.time}</span></div>${body}</section>`;
+  }
+  out += `<section class="step" id="err"><div class="sh"><span class="num">!</span><h2>오류 사전</h2><span class="sub">빨간 글씨가 나오면 여기부터</span></div>
+    <div class="box"><div class="tbl"><table><thead><tr><th>이런 오류가 나면</th><th>이렇게 고쳐요</th></tr></thead><tbody>${D.errors.map(r=>`<tr data-k="${esc((r[0]+' '+r[1]).toLowerCase())}"><td><code>${esc(r[0])}</code></td><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table></div></div></section>`;
+  $('#main').innerHTML = out;
+}
+function selectGroup(g){
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected', t.dataset.g===g));
+  document.querySelectorAll('.grp').forEach(x=>x.hidden = x.dataset.g!==g);
+  store.set('group', g);
+}
+render();
+
+document.addEventListener('click', e=>{
+  const cp = e.target.closest('.copy');
+  if(cp){
+    const pre = document.getElementById(cp.dataset.for); const text = pre.innerText;
+    const ok = ()=>{cp.textContent='복사됨'; setTimeout(()=>cp.textContent='복사',1400)};
+    const fallback = ()=>{const r=document.createRange(); r.selectNodeContents(pre); const s=getSelection(); s.removeAllRanges(); s.addRange(r); cp.textContent='Ctrl+C'; setTimeout(()=>cp.textContent='복사',1800)};
+    try{ navigator.clipboard.writeText(text).then(ok, fallback); }catch(err){ fallback(); }
+    return;
+  }
+  const tab = e.target.closest('.tab'); if(tab){ selectGroup(tab.dataset.g); return; }
+  const m = e.target.closest('.m'); if(m){ selectGroup(m.dataset.g); document.getElementById('s5').scrollIntoView(); return; }
+});
+document.addEventListener('change', e=>{
+  const c = e.target; if(!c.dataset || !c.dataset.s) return;
+  const k='todo-'+c.dataset.s; let v=store.get(k,[]); const i=+c.dataset.i;
+  v = c.checked ? [...new Set([...v,i])] : v.filter(x=>x!==i); store.set(k,v);
+});
+// 검색
+const q = $('#q');
+q.addEventListener('input', ()=>{
+  const t = q.value.trim().toLowerCase();
+  document.querySelectorAll('.card, #err tr[data-k]').forEach(el=>el.classList.toggle('hidden-by-search', !!t && !el.dataset.k.includes(t)));
+  if(t){ document.querySelectorAll('.grp').forEach(g=>{ g.hidden = !g.querySelector('.card:not(.hidden-by-search)'); }); }
+  else selectGroup(store.get('group','reg'));
+});
+document.addEventListener('keydown', e=>{ if(e.key==='/' && document.activeElement!==q){ e.preventDefault(); q.focus(); }});
+// 현재 단계 표시
+const links = [...document.querySelectorAll('nav.toc a')];
+const io = new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ links.forEach(a=>a.classList.toggle('on', a.dataset.id===en.target.id)); }}); },{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('section.step').forEach(s=>io.observe(s));
+</script>
+</body>
+</html>
